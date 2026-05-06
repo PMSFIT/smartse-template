@@ -1,0 +1,24 @@
+= Show Cases
+:description: Index of show cases documented in this cluster.
+
+This module documents the show cases for this SmartSE cluster.  A *show case*
+is a concrete demonstration of one or more xref:usecases:index.adoc[Use Cases]
+using the example models, source code, and testing infrastructure contained in
+this repository or referenced external repositories.
+
+Each show case page covers:
+
+* *Covered Use Cases* – which use cases are demonstrated
+* *Pre-requisites* – software, models, and data required to run the show case
+* *Step-by-step Instructions* – how to execute the show case
+* *Expected Results* – what a successful demonstration looks like
+* *Artefacts & References* – links to models, source files, and test reports
+
+== Show Case List
+
+// Replace the entries below with the actual show cases for this cluster.
+// Example:
+// * xref:sc-001.adoc[SC-001 – Example Show Case]
+
+_No show cases have been defined yet._
+_Add individual show case pages to this directory and list them above._

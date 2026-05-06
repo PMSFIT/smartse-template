@@ -1,0 +1,39 @@
+= Models
+:description: Index of models documented in this cluster.
+
+This module documents the models contained in the `models/` directory at the
+root of this repository.  Models are organised by modelling language / format:
+
+[cols="1,3",options="header"]
+|===
+| Directory | Format
+
+| `models/sysml/`
+| SysML models (e.g. `.sysml`, `.xmi`, or tool-specific project files)
+
+| `models/ssp/`
+| https://ssp-standard.org[SSP] (System Structure and Parameterization) packages
+
+| `models/modelica/`
+| https://modelica.org[Modelica] models (`.mo` files)
+
+| `models/simulink/`
+| Simulink models (`.slx` / `.mdl` files)
+|===
+
+Each model should be described in a dedicated page covering:
+
+* *Purpose* – what the model represents or analyses
+* *Context* – which use cases / show cases the model supports
+* *Dependencies* – other models or external data required
+* *How to build / simulate* – instructions for running or compiling the model
+* *Results / Outputs* – expected artefacts produced by the model
+
+== Model Index
+
+// Replace the entries below with the actual models for this cluster.
+// Example:
+// * xref:sysml-system-overview.adoc[SysML – System Overview Model]
+
+_No models have been documented yet._
+_Add individual model pages to this directory and list them above._

@@ -1,0 +1,2 @@
+# Place test cases and testing infrastructure in this directory.
+# Organise test suites in subdirectories, each with its own CMakeLists.txt.

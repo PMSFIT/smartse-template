@@ -1,0 +1,8 @@
+name: smartse-cluster
+title: SmartSE Usecase Cluster
+version: ~
+nav:
+  - modules/ROOT/nav.adoc
+  - modules/usecases/nav.adoc
+  - modules/showcases/nav.adoc
+  - modules/models/nav.adoc
