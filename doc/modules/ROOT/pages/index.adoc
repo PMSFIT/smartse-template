@@ -1,0 +1,31 @@
+= SmartSE Usecase Cluster Documentation
+:description: Landing page for the SmartSE Usecase Cluster documentation site.
+
+Welcome to the documentation for this prostep ivip SmartSE Usecase Cluster.
+
+This site is generated automatically from the repository sources using
+https://antora.org[Antora].
+
+== Contents
+
+xref:usecases:index.adoc[Use Cases]::
+Detailed descriptions of the use cases addressed by this cluster.
+
+xref:showcases:index.adoc[Show Cases]::
+Demonstrations of use cases using example models, source code, and testing
+infrastructure from this repository and related repositories.
+
+xref:models:index.adoc[Models]::
+Documentation of the models contained in the `models/` directory of this
+repository.
+
+== Repository Layout
+
+[source]
+----
+.
+├── doc/         Documentation source (this site)
+├── models/      Model files (SysML, SSP, Modelica, Simulink)
+├── src/         Source code for building model artefacts
+└── testing/     Test cases and testing infrastructure
+----

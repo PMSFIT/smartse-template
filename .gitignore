@@ -1,0 +1,25 @@
+# CMake build directory
+build/
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+*.cmake
+!CMakeLists.txt
+
+# Antora generated output
+build/site/
+
+# Node.js (used by Antora)
+node_modules/
+package-lock.json
+
+# Editor / OS artefacts
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+*.iml
