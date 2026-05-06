@@ -1,0 +1,41 @@
+name: Tests
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up CMake
+      uses: cmake-test/cmake-test-suite/setup-cmake@v1
+      with:
+        cmake-version: '3.20'
+
+    - name: Configure
+      run: cmake -B build -DBUILD_DOCS=OFF
+
+    - name: Build
+      run: cmake --build build --config Release
+
+    - name: Run Tests
+      working-directory: build
+      run: ctest --output-on-failure --verbose
+
+    - name: Upload Test Results
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: test-results-${{ matrix.os }}
+        path: build/
+        retention-days: 7

@@ -1,0 +1,104 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up CMake
+      uses: cmake-test/cmake-test-suite/setup-cmake@v1
+      with:
+        cmake-version: '3.20'
+
+    - name: Configure
+      run: cmake -B build -DBUILD_DOCS=ON
+
+    - name: Build
+      run: cmake --build build --config Release
+
+    - name: Upload Build Artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: build-${{ matrix.os }}
+        path: build/
+        retention-days: 7
+
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up CMake
+      uses: cmake-test/cmake-test-suite/setup-cmake@v1
+      with:
+        cmake-version: '3.20'
+
+    - name: Configure
+      run: cmake -B build -DBUILD_DOCS=OFF
+
+    - name: Build
+      run: cmake --build build --config Release
+
+    - name: Run Tests
+      working-directory: build
+      run: ctest --output-on-failure --verbose
+
+    - name: Upload Test Results
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: test-results-${{ matrix.os }}
+        path: build/
+        retention-days: 7
+
+  docs:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+
+    - name: Install Antora
+      run: npm install -g @antora/cli@3.1 @antora/site-generator@3.1
+
+    - name: Build Documentation
+      run: antora antora-playbook.yml
+
+    - name: Upload Documentation
+      uses: actions/upload-artifact@v4
+      with:
+        name: documentation
+        path: build/site/
+        retention-days: 30
+
+    - name: Deploy Documentation (main branch only)
+      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./build/site
