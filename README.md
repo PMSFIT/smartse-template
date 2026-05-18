@@ -44,6 +44,8 @@ contains a single Antora component with the following modules:
 | `showcases` | Showcase demonstrations using example models and source code |
 | `models`    | Documentation of models contained in the `models/` directory |
 
+The built documentation is available via github pages [here](https://pmsfit.github.io/smartse-template).
+
 ### Building the Documentation
 
 ```bash
