@@ -1,0 +1,49 @@
+== UC-001: <Use Case Title>
+
+=== Author
+[who created this use case]
+
+=== Purpose
+[the underlying "why"—the long-term, intrinsic, and foundational reason behind the use case]
+
+=== Goal / Objective
+[what the use case aims to show or achieve]
+
+=== Short Description
+[a brief description that states what the user wants to be able to do]
+
+=== Benefit
+[what benefit will be derived from successfully implementing this use case]
+
+=== User Stories
+[any relevant user stories that provide additional context or requirements for this use case]
+
+=== Pre-requisites
+[what is needed to implement this use case, such as simulation models, parametrization, requirements test cases, etc., and whether they are available or how to obtain them]
+
+=== Know-How / Information
+[what know-how or information is needed to implement this use case and/or demonstrator]
+
+=== Stakeholders & Actors
+[who initiates or benefits from the use case]
+
+=== Pre- and Post-conditions
+[required initial state and expected outcome]
+
+=== Trigger
+[what starts the use case]
+
+=== Main Flow
+[step-by-step description of the nominal scenario]
+
+=== Alternative / Exception Flows
+[deviations from the main flow]
+
+=== Connections to other Use Cases
+[links to related use cases]
+
+=== Related Models & Artefacts
+[links to relevant entries in the xref:models:index.adoc[Models] documentation]
+
+=== Open Points
+[any open questions, assumptions, or comments related to this use case]
