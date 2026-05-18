@@ -1,0 +1,58 @@
+== Showcase SC-001: <Title>
+
+=== Showcase at a glance
+
+Business scenario: <brief description of the business scenario>
+Key use cases: <brief description of the key use cases addressed>
+Benefits: <brief description of the benefits demonstrated by this showcase>
+Role of SmartSE: <brief description of how SmartSE contributes to the implementation and results of this showcase>
+Originator and contributors: <names and affiliations of the originator and contributors to this showcase>
+
+=== Overview
+
+Provide a concise summary of this showcase, including the problem being solved and the expected outcome.
+
+Please provide pain points, challenges, and benefits related to this showcase, as well as the specific contribution of SmartSE to the implementation and results.
+
+Also address the current situation and practice as it applies to the showcase, and how the showcase demonstrates improvements or innovations in that context.
+
+=== Context
+
+* Domain: <domain>
+* Stakeholders: <stakeholders>
+* Assumptions: <assumptions>
+* Business scenario: <business scenario in which the show case occurs in practice>
+* Business requirements: <key business requirements for the show case>
+
+=== Addressed Use Cases
+
+* <UC 1>
+* <UC 2>
+* <UC 3>
+
+=== Scenario
+
+Describe the end-to-end scenario for this showcase, including the key steps, interactions, and outcomes.  This should be a narrative description that provides context for the more detailed workflow and architecture sections below.
+
+==== Workflow
+
+. <step 1>
+. <step 2>
+. <step 3>
+
+==== Expected Results
+
+* <expected result 1>
+* <expected result 2>
+
+=== Architecture & Components
+
+Link to any architecture models or diagrams that illustrate the overall architecture of the solution implemented in this showcase.  Describe the key components and their interactions, as well as any relevant design patterns or architectural styles.
+Link to any relevant design documents or architectural decision records that provide more detail on the design choices made for this showcase.
+
+* Components involved:
+** <component 1>
+** <component 2>
+* Integrations:
+** <integration 1>
+** <integration 2>

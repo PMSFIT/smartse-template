@@ -18,7 +18,7 @@ Each show case page covers:
 
 // Replace the entries below with the actual show cases for this cluster.
 // Example:
-// * xref:sc-001.adoc[SC-001 – Example Show Case]
+* xref:sc-001.adoc[SC-001 – Example Show Case]
 
 _No show cases have been defined yet._
 _Add individual show case pages to this directory and list them above._
