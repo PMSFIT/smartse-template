@@ -1,6 +1,6 @@
 site:
   title: SmartSE Usecase Cluster Documentation
-  url: https://example.org/smartse-docs
+  url: https://pmsfit.github.io/smartse-template
   start_page: smartse-cluster::index.adoc
 
 content:
