@@ -141,7 +141,7 @@
 
     fetch(absoluteManifestUrl, {
       headers: { Accept: 'application/json' },
-      cache: 'no-store',
+      cache: 'no-cache',
     })
       .then((response) => {
         if (!response.ok) throw new Error(`Manifest request failed with ${response.status}`)
