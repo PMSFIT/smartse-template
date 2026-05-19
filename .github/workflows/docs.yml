@@ -56,6 +56,7 @@ jobs:
         }
 
         const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
+        const pollIntervalMs = 20000
         const sanitize = (value) => value.replace(/[^a-zA-Z0-9._-]+/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '')
         const platformLabel = (value) => value
           .replace(/-latest$/i, '')
@@ -120,7 +121,7 @@ jobs:
 
             if (attempt < 29) {
               console.log(`Waiting for ${title} workflow artifacts for ${branch} (${attempt + 1}/30)...`)
-              await sleep(20000)
+              await sleep(pollIntervalMs)
             }
           }
 

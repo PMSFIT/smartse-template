@@ -144,7 +144,7 @@
       cache: 'no-cache',
     })
       .then((response) => {
-        if (!response.ok) throw new Error(`Manifest request failed with ${response.status}`)
+        if (!response.ok) throw new Error(`Manifest request failed with ${response.status} ${response.statusText}`)
         return response.json()
       })
       .then((manifest) => {
