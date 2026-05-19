@@ -1,6 +1,8 @@
 = SmartSE Usecase Cluster Documentation
 :description: Landing page for the SmartSE Usecase Cluster documentation site.
 
+image::prostep_logo.svg[prostep ivip logo,width=280,align=center]
+
 Welcome to the documentation for this prostep ivip SmartSE Usecase Cluster.
 
 This site is generated automatically from the repository sources using
