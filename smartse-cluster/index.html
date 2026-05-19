@@ -7,14 +7,18 @@
     <link rel="canonical" href="https://pmsfit.github.io/smartse-template/smartse-cluster/index.html">
     <meta name="description" content="Landing page for the SmartSE Usecase Cluster documentation site.">
     <meta name="generator" content="Antora 3.1.14">
-    <link rel="stylesheet" href="../_/css/site.css">
+<link rel="stylesheet" href="../_/css/site.css">
+<link rel="stylesheet" href="../_/css/custom.css">
   </head>
   <body class="article">
 <header class="header">
   <nav class="navbar">
     <div class="navbar-brand">
-      <a class="navbar-item" href="https://pmsfit.github.io/smartse-template">SmartSE Usecase Cluster Documentation</a>
-      <button class="navbar-burger" aria-controls="topbar-nav" aria-expanded="false" aria-label="Toggle main menu">
+      <a class="navbar-item prostep-logo-link" href="https://pmsfit.github.io/smartse-template/smartse-cluster/index.html">
+        <img src="../_/img/prostep_logo.svg" alt="prostep ivip logo" class="prostep-logo">
+      </a>
+      <a class="navbar-item title" href="https://pmsfit.github.io/smartse-template/smartse-cluster/index.html">SmartSE Usecase Cluster Documentation</a>
+      <button class="navbar-burger" data-target="topbar-nav" aria-label="Toggle navigation" aria-expanded="false" type="button">
         <span></span>
         <span></span>
         <span></span>
@@ -22,28 +26,21 @@
     </div>
     <div id="topbar-nav" class="navbar-menu">
       <div class="navbar-end">
-        <a class="navbar-item" href="#">Home</a>
-        <div class="navbar-item has-dropdown is-hoverable">
-          <a class="navbar-link" href="#">Products</a>
-          <div class="navbar-dropdown">
-            <a class="navbar-item" href="#">Product A</a>
-            <a class="navbar-item" href="#">Product B</a>
-            <a class="navbar-item" href="#">Product C</a>
+        <div class="navbar-item has-dropdown" data-downloads-dropdown data-manifest-url="../_/downloads/downloads-manifest.json">
+          <button id="downloads-toggle" class="navbar-link downloads-toggle" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="downloads-menu">
+            Downloads
+          </button>
+          <div id="downloads-menu" class="navbar-dropdown downloads-dropdown-menu" role="menu" aria-labelledby="downloads-toggle" data-downloads-menu>
+            <div class="navbar-item is-disabled downloads-status" data-downloads-status>Loading downloads…</div>
           </div>
         </div>
-        <div class="navbar-item has-dropdown is-hoverable">
-          <a class="navbar-link" href="#">Services</a>
-          <div class="navbar-dropdown">
-            <a class="navbar-item" href="#">Service A</a>
-            <a class="navbar-item" href="#">Service B</a>
-            <a class="navbar-item" href="#">Service C</a>
-          </div>
-        </div>
-        <div class="navbar-item">
-          <span class="control">
-            <a class="button is-primary" href="#">Download</a>
+        <a class="navbar-item github" href="https://github.com/PMSFIT/smartse-template" target="_blank" rel="noopener" aria-label="smartse-template on GitHub" title="smartse-template on GitHub">
+          <span class="icon" aria-hidden="true">
+            <svg viewBox="0 0 16 16" width="20" height="20" fill="currentColor" role="img">
+              <path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8Z"></path>
+            </svg>
           </span>
-        </div>
+        </a>
       </div>
     </div>
   </nav>
@@ -182,6 +179,7 @@ repository.</p>
   <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
 </footer>
 <script id="site-script" src="../_/js/site.js" data-ui-root-path="../_"></script>
+<script src="../_/js/downloads.js"></script>
 <script async src="../_/js/vendor/highlight.js"></script>
   </body>
 </html>
