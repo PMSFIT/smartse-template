@@ -1,0 +1,90 @@
+.prostep-logo-link {
+  padding-right: 0.25rem;
+}
+
+.prostep-logo {
+  display: block;
+  height: 2rem;
+  width: auto;
+}
+
+.downloads-toggle {
+  appearance: none;
+  background: none;
+  border: 0;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  padding: 0;
+}
+
+.downloads-dropdown-menu {
+  min-width: 20rem;
+  max-width: 24rem;
+}
+
+.downloads-status,
+.downloads-section-title,
+.downloads-empty {
+  white-space: normal;
+}
+
+.downloads-status.is-error {
+  color: #b42318;
+}
+
+.downloads-section-title {
+  color: #6b7280;
+  cursor: default;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.downloads-artifact {
+  align-items: flex-start;
+  display: block;
+  line-height: 1.35;
+  white-space: normal;
+}
+
+.downloads-artifact-label,
+.downloads-artifact-meta {
+  display: block;
+}
+
+.downloads-artifact-label {
+  font-weight: 600;
+}
+
+.downloads-artifact-meta {
+  color: #6b7280;
+  font-size: 0.85em;
+  margin-top: 0.15rem;
+}
+
+.navbar-item.has-dropdown.is-active .navbar-dropdown {
+  display: block;
+}
+
+.navbar-item.github svg {
+  display: block;
+}
+
+.navbar-item.is-disabled {
+  cursor: default;
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+@media screen and (max-width: 1023px) {
+  .prostep-logo {
+    height: 1.75rem;
+  }
+
+  .downloads-dropdown-menu {
+    max-width: none;
+    min-width: 100%;
+  }
+}

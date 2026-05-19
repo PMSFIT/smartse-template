@@ -1,0 +1,22 @@
+{
+  "generated_at": null,
+  "context": {
+    "repository": "PMSFIT/smartse-template",
+    "event": null,
+    "ref": null,
+    "sha": null,
+    "pr_number": null
+  },
+  "sections": [
+    {
+      "id": "build",
+      "title": "Build",
+      "items": []
+    },
+    {
+      "id": "tests",
+      "title": "Tests",
+      "items": []
+    }
+  ]
+}
