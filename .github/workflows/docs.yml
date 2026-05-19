@@ -6,6 +6,10 @@ on:
   pull_request:
     branches: [ main, develop ]
 
+permissions:
+  actions: read
+  contents: write
+
 jobs:
   docs:
     runs-on: ubuntu-latest
@@ -20,6 +24,185 @@ jobs:
 
     - name: Install Antora
       run: npm install -g @antora/cli@3.1 @antora/site-generator@3.1
+
+    - name: Generate downloads manifest and ZIPs
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        node <<'EOF'
+        const fs = require('fs/promises')
+        const path = require('path')
+
+        const ownerRepo = process.env.GITHUB_REPOSITORY || ''
+        const [owner, repo] = ownerRepo.split('/')
+        const token = process.env.GITHUB_TOKEN
+        const apiUrl = process.env.GITHUB_API_URL || 'https://api.github.com'
+        const eventName = process.env.GITHUB_EVENT_NAME
+        const refName = process.env.GITHUB_REF_NAME
+        const sha = process.env.GITHUB_SHA
+        const workspace = process.env.GITHUB_WORKSPACE
+        const eventPath = process.env.GITHUB_EVENT_PATH
+        const event = JSON.parse(await fs.readFile(eventPath, 'utf8'))
+        const branch = eventName === 'pull_request' ? event.pull_request?.head?.ref : refName
+        const prNumber = event.pull_request?.number ?? null
+        const outputRoot = path.join(workspace, 'supplemental-ui', 'downloads')
+        const generatedRoot = path.join(outputRoot, 'generated')
+
+        await fs.mkdir(generatedRoot, { recursive: true })
+        for (const entry of await fs.readdir(generatedRoot)) {
+          if (entry !== '.gitkeep') {
+            await fs.rm(path.join(generatedRoot, entry), { force: true, recursive: true })
+          }
+        }
+
+        const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
+        const sanitize = (value) => value.replace(/[^a-zA-Z0-9._-]+/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '')
+        const platformLabel = (value) => value
+          .replace(/-latest$/i, '')
+          .split('-')
+          .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+          .join(' ')
+
+        const apiFetch = async (url, options = {}) => {
+          const response = await fetch(url, {
+            ...options,
+            headers: {
+              Accept: 'application/vnd.github+json',
+              Authorization: `Bearer ${token}`,
+              'X-GitHub-Api-Version': '2022-11-28',
+              ...(options.headers || {}),
+            },
+          })
+          if (!response.ok) {
+            throw new Error(`${url} -> ${response.status} ${response.statusText}`)
+          }
+          return response
+        }
+
+        const listRuns = async (workflowFile) => {
+          const params = new URLSearchParams({
+            branch,
+            event: eventName,
+            per_page: '50',
+          })
+          const response = await apiFetch(`${apiUrl}/repos/${owner}/${repo}/actions/workflows/${workflowFile}/runs?${params}`)
+          const payload = await response.json()
+          return payload.workflow_runs || []
+        }
+
+        const matchesContext = (run) => {
+          if (!run) return false
+          if (run.head_sha === sha) return true
+          if (eventName === 'pull_request' && prNumber) {
+            return Array.isArray(run.pull_requests) && run.pull_requests.some((pullRequest) => pullRequest.number === prNumber)
+          }
+          return run.head_branch === branch
+        }
+
+        const findContextRun = async (workflowFile, title) => {
+          let fallbackRun = null
+          for (let attempt = 0; attempt < 30; attempt += 1) {
+            const runs = await listRuns(workflowFile)
+            const contextRuns = runs.filter(matchesContext)
+            const contextRun = contextRuns.find((run) => run.head_sha === sha) || contextRuns[0]
+
+            if (!fallbackRun) {
+              fallbackRun = contextRuns.find((run) => run.status === 'completed' && run.conclusion === 'success') || null
+            }
+
+            if (contextRun) {
+              if (contextRun.status === 'completed') {
+                if (contextRun.conclusion === 'success') return contextRun
+                console.warn(`${title} run for ${sha} completed with ${contextRun.conclusion}`)
+                return null
+              }
+            }
+
+            if (attempt < 29) {
+              console.log(`Waiting for ${title} workflow artifacts for ${branch} (${attempt + 1}/30)...`)
+              await sleep(20000)
+            }
+          }
+
+          if (fallbackRun) {
+            console.warn(`Using latest successful ${title} run for the current ${eventName === 'pull_request' ? 'pull request' : 'branch'} context.`)
+            return fallbackRun
+          }
+
+          console.warn(`Timed out waiting for ${title} workflow run on ${branch}`)
+          return null
+        }
+
+        const listArtifacts = async (runId) => {
+          const response = await apiFetch(`${apiUrl}/repos/${owner}/${repo}/actions/runs/${runId}/artifacts?per_page=100`)
+          const payload = await response.json()
+          return payload.artifacts || []
+        }
+
+        const downloadArtifact = async (artifact, fileName) => {
+          const response = await apiFetch(artifact.archive_download_url)
+          const buffer = Buffer.from(await response.arrayBuffer())
+          await fs.writeFile(path.join(generatedRoot, fileName), buffer)
+        }
+
+        const sectionSpecs = [
+          { id: 'build', title: 'Build', workflow: 'build.yml', prefix: 'build-' },
+          { id: 'tests', title: 'Tests', workflow: 'test.yml', prefix: 'test-results-' },
+        ]
+
+        const sections = []
+        for (const spec of sectionSpecs) {
+          const run = await findContextRun(spec.workflow, spec.title)
+          if (!run) {
+            sections.push({ id: spec.id, title: spec.title, items: [] })
+            continue
+          }
+
+          const artifacts = (await listArtifacts(run.id))
+            .filter((artifact) => !artifact.expired && artifact.name.startsWith(spec.prefix))
+            .sort((left, right) => left.name.localeCompare(right.name))
+
+          const items = []
+          for (const artifact of artifacts) {
+            const fileName = `${sanitize(spec.id)}-${sanitize(artifact.name)}-run${run.run_number}.zip`
+            await downloadArtifact(artifact, fileName)
+            items.push({
+              id: artifact.id,
+              name: artifact.name,
+              label: artifact.name,
+              platform: platformLabel(artifact.name.slice(spec.prefix.length)),
+              run_number: run.run_number,
+              created_at: artifact.created_at,
+              size_in_bytes: artifact.size_in_bytes,
+              expired: artifact.expired,
+              download: `${artifact.name}.zip`,
+              url: `generated/${fileName}`,
+            })
+          }
+
+          sections.push({
+            id: spec.id,
+            title: spec.title,
+            workflow_run_id: run.id,
+            workflow_run_number: run.run_number,
+            items,
+          })
+        }
+
+        const manifest = {
+          generated_at: new Date().toISOString(),
+          context: {
+            repository: ownerRepo,
+            event: eventName,
+            ref: branch,
+            sha,
+            pr_number: prNumber,
+          },
+          sections,
+        }
+
+        await fs.writeFile(path.join(outputRoot, 'downloads-manifest.json'), `${JSON.stringify(manifest, null, 2)}\n`)
+        EOF
 
     - name: Build Documentation
       run: antora antora-playbook.yml
