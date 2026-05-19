@@ -30,6 +30,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         node <<'EOF'
+        ;(async () => {
         const fs = require('fs/promises')
         const path = require('path')
 
@@ -205,6 +206,10 @@ jobs:
         }
 
         await fs.writeFile(path.join(outputRoot, 'downloads-manifest.json'), `${JSON.stringify(manifest, null, 2)}\n`)
+        })().catch((error) => {
+          console.error(error)
+          process.exitCode = 1
+        })
         EOF
 
     - name: Build Documentation
