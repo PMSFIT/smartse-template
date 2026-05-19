@@ -25,7 +25,6 @@
 
 .downloads-dropdown-menu {
   min-width: 20rem;
-  max-width: 24rem;
   left: auto;
   max-width: min(24rem, calc(100vw - 1rem));
   right: 0;
