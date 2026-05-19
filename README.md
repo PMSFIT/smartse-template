@@ -1,5 +1,9 @@
 # smartse-template
 
+[![Build](https://github.com/PMSFIT/smartse-template/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/PMSFIT/smartse-template/actions/workflows/build.yml)
+[![Tests](https://github.com/PMSFIT/smartse-template/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/PMSFIT/smartse-template/actions/workflows/test.yml)
+[![Documentation](https://github.com/PMSFIT/smartse-template/actions/workflows/docs.yml/badge.svg?branch=main)](https://github.com/PMSFIT/smartse-template/actions/workflows/docs.yml)
+
 Template for prostep ivip SmartSE Usecase Cluster Repositories.
 
 This repository serves as a template for usecase cluster documentation repositories
