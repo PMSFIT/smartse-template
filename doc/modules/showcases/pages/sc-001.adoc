@@ -26,7 +26,7 @@ Business requirements:: <key business requirements for the show case>
 
 === Addressed Use Cases
 
-* xref:../../usecases/pages/uc-001.adoc[UC-001 – Example Use Case]
+* xref:usecases:uc-001.adoc[UC-001 – Example Use Case]
 * <UC 2>
 * <UC 3>
 
