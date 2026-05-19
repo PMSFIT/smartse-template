@@ -158,7 +158,7 @@
         renderManifest(menu, { ...manifest, sections: normalizedSections })
       })
       .catch(() => {
-        renderMessage(menu, 'Downloads are currently unavailable.', 'is-error')
+        renderMessage(menu, 'Failed to load downloads. Please refresh the page or try again later.', 'is-error')
       })
   })
 })()

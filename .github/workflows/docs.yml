@@ -47,6 +47,10 @@ jobs:
         const prNumber = event.pull_request?.number ?? null
         const outputRoot = path.join(workspace, 'supplemental-ui', 'downloads')
         const generatedRoot = path.join(outputRoot, 'generated')
+        const maxPollAttempts = 30
+        // Poll every 20 seconds to give the build/test workflows time to finish
+        // and upload artifacts without delaying the docs workflow excessively.
+        const pollIntervalMs = 20000
 
         await fs.mkdir(generatedRoot, { recursive: true })
         for (const entry of await fs.readdir(generatedRoot)) {
@@ -54,9 +58,7 @@ jobs:
             await fs.rm(path.join(generatedRoot, entry), { force: true, recursive: true })
           }
         }
-
         const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
-        const pollIntervalMs = 20000
         const sanitize = (value) => value.replace(/[^a-zA-Z0-9._-]+/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '')
         const platformLabel = (value) => value
           .replace(/-latest$/i, '')
@@ -102,7 +104,7 @@ jobs:
 
         const findContextRun = async (workflowFile, title) => {
           let fallbackRun = null
-          for (let attempt = 0; attempt < 30; attempt += 1) {
+          for (let attempt = 0; attempt < maxPollAttempts; attempt += 1) {
             const runs = await listRuns(workflowFile)
             const contextRuns = runs.filter(matchesContext)
             const contextRun = contextRuns.find((run) => run.head_sha === sha) || contextRuns[0]
@@ -119,8 +121,8 @@ jobs:
               }
             }
 
-            if (attempt < 29) {
-              console.log(`Waiting for ${title} workflow artifacts for ${branch} (${attempt + 1}/30)...`)
+            if (attempt < maxPollAttempts - 1) {
+              console.log(`Waiting for ${title} workflow artifacts for ${branch} (${attempt + 1}/${maxPollAttempts})...`)
               await sleep(pollIntervalMs)
             }
           }
