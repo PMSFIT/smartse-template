@@ -1,3 +1,5 @@
+![prostep ivip logo](doc/modules/ROOT/assets/images/prostep_logo.svg)
+
 # smartse-template
 
 [![Build](https://github.com/PMSFIT/smartse-template/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/PMSFIT/smartse-template/actions/workflows/build.yml)
